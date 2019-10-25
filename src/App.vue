@@ -1,12 +1,14 @@
 <template lang='pug'>
     section.main
         <NavBar />
+        <backgroundMusic />
         <router-view></router-view>
         <Contact v-if='showContact' />
 </template>
 <script>
 import NavBar from './js/template/components/NavBar.vue';
 import Contact from './js/template/Contact.vue';
+import backgroundMusic from './js/template/components/backgroundMusic.vue';
 
 export default {
     name: 'App',
@@ -17,7 +19,8 @@ export default {
     },
     components: {
         NavBar,
-        Contact
+        Contact,
+        backgroundMusic
     }
 }
 </script>

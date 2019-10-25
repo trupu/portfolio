@@ -84,18 +84,22 @@ export default {
     @keyframes showMenu {
         0% {
             transform: translateY(-300px);
+            z-index: 50;
         }
         100% {
             transform: translateY(0);
+            z-index: 100;
         }
     }
 
     @keyframes hideMenu {
         0% {
             transform: translateY(0);
+            z-index: 100;
         }
         100% {
             transform: translateY(-300px);
+            z-index: 50;
         }
     }
 
@@ -122,7 +126,7 @@ export default {
     }
 
     #navbar {
-        z-index: 100;
+        z-index: 50;
         width: 100%;
         height: 50px;
         position: fixed;

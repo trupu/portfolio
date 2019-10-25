@@ -57,6 +57,10 @@ config.module = {
                     })
                 }
             ]
+        },
+        {
+            test: /\.mp3$/,
+            loader: 'file-loader'
         }
     ]
 }
