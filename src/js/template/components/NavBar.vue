@@ -65,7 +65,11 @@ export default {
         },
         showContact() {
             if (this.$parent.showContact) {
-                this.$parent.showContact = false;
+                const list = document.querySelectorAll('.contact-box_wrapper');
+                if (list) {
+                    list.forEach((el) => el.style.animation = 'slideOut .5s both ease-in-out');
+                    list[0].addEventListener('animationend', () => this.$parent.showContact = false);
+                }
                 return;
             }
             this.$parent.showContact = true;

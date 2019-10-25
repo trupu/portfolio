@@ -12,4 +12,10 @@ body{
 
 html{
     scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+#holder {
+    overflow-x: hidden;
+    width: 100%;
 }
