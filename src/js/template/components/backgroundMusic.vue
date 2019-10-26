@@ -32,7 +32,10 @@ export default {
             this.volumeUp = false;
             this.audio.autoplay = true;
             this.audio.volume = 0.2;
-            this.audio.loop = true;
+            this.audio.addEventListener('ended', () => {
+                this.audio.duration = 0;
+                this.audio.play();
+            });
             const isMuted = Cookie.set('muted', true);
         },
         audioClick() {
