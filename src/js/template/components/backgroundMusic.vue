@@ -1,43 +1,41 @@
 <template lang="pug">
     section#background-music
         div.audio-wrapper
-            audio.audio(controls)
-                source(src='../../../background.mp3')
-                | Your browser does not support the audio element :(
             i(class='fas fa-volume-up' v-if='volumeUp' @click='audioClick()')
             i(class='fas fa-volume-mute' v-if='!volumeUp' @click='audioClick()')
+            div.audio-wrapper_content
+                p.author
+                    | {{ audioAuthor }}
+                p.name
+                    | {{ audioName }}
 </template>
 <script>
 import Cookie from 'js-cookie';
+import Music from '../../../background.mp3';
 
 export default {
     name: 'backgroundMusic',
     data() {
         return {
             volumeUp: true,
+            audio: '',
+            Music,
+            audioAuthor: 'Hans Zimmer',
+            audioName: '(S.T.A.Y) Interstellar - Main Theme'
         }
     },
     methods: {
-        audioConf() {
-            const audio = document.querySelector('.audio');
-            if (audio) {
-                audio.play();
-            } else {
-                setTimeout(() => {
-                    if (audio) audio.play();
-                }, 5);
-            }
-            const isMuted = Cookie.get('muted');
-            if (isMuted === 'true') {
-                audio.muted = true;
-                this.volumeUp = false;
-            } else {
-                audio.muted = false;
-                this.volumeUp = true;
-            }
+        async audioConf() {
+            const song = await this.Music;
+            if (song) this.audio = new Audio(song);
+            this.audio.muted = true;
+            this.volumeUp = false;
+            this.audio.autoplay = true;
+            this.audio.volume = 0.2;
+            const isMuted = Cookie.set('muted', true);
         },
         audioClick() {
-            const audio = document.querySelector('.audio');
+            const audio = this.audio;
             if (this.volumeUp) {
                 audio.muted = true;
                 this.volumeUp = false;
@@ -66,9 +64,10 @@ export default {
         z-index: 100;
 
         .audio-wrapper {
-            audio {
-                display: none;
-            }
+            display: flex;
+            flex-flow: row;
+            align-items: center;
+            justify-content: center;
 
             i {
                 font-size: 2em;
@@ -79,6 +78,21 @@ export default {
                     cursor: pointer;
                 }
             }
+
+            .audio-wrapper_content {
+                font-size: .6em;
+                margin: 0 10px;
+
+                .author {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .name {
+                    margin: 0;
+                    padding: 0;
+                }
+            }
         }
     }
 
@@ -86,6 +100,7 @@ export default {
 
         #background-music {
             top: 20px;
+            left: 10px;
         }
     }
 
