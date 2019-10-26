@@ -32,6 +32,7 @@ export default {
             this.volumeUp = false;
             this.audio.autoplay = true;
             this.audio.volume = 0.2;
+            this.audio.loop = true;
             const isMuted = Cookie.set('muted', true);
         },
         audioClick() {

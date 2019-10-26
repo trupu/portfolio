@@ -118,6 +118,8 @@ export default {
 
     @media (max-width: 768px) {
         #contact {
+
+            bottom: 5px;
             .contact-box {
                 width: 100%;
                 display: grid;
