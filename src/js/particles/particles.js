@@ -36,7 +36,7 @@ particlesJS("particles-js", {
         }
       },
       "size": {
-        "value": 2,
+        "value": 3,
         "random": true,
         "anim": {
           "enable": true,
@@ -99,7 +99,7 @@ particlesJS("particles-js", {
           "duration": 0.4
         },
         "push": {
-          "particles_nb": 4
+          "particles_nb": 10
         },
         "remove": {
           "particles_nb": 2
