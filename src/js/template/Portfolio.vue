@@ -1,23 +1,24 @@
 <template lang="pug">
     section#portfolio
         div.portfolio-wrapper
-            div.title-wrapper
-                p.title-wrapper_name
-                    | {{ projects[index].name }}
-                p.title-wrapper_stack
-                    | {{ projects[index].stack }}
-            div.description-wrapper
-                p.description-wrapper_content
-                    | {{ projects[index].description }}
-            div.icons-wrapper
-                a.git(:href='projects[index].gitlink' target='blank')
-                    i(class='fab fa-github')
-                    span.content
-                        | Github
-                a.preview(:href='projects[index].preview' target='blank')
-                    i(class='far fa-file-code')
-                    span.content
-                        | Preview
+            div.slider-content
+                div.title-wrapper
+                    p.title-wrapper_name
+                        | {{ projects[index].name }}
+                    p.title-wrapper_stack
+                        | {{ projects[index].stack }}
+                div.description-wrapper
+                    p.description-wrapper_content
+                        | {{ projects[index].description }}
+                div.icons-wrapper
+                    a.git(:href='projects[index].gitlink' target='blank')
+                        i(class='fab fa-github')
+                        span.content
+                            | Github
+                    a.preview(:href='projects[index].preview' target='blank')
+                        i(class='far fa-file-code')
+                        span.content
+                            | Preview
             div.portfolio-slider
                 div.slide(v-for='keys in projects')
             div.arrows-wrapper
@@ -35,16 +36,58 @@ export default {
             index: 0,
             projects: portfolioData,
             mouseStartX: 0,
-            mouseEndX: 0
+            mouseEndX: 0,
+            mouseTransition: 0
         }
     },
     methods: {
+        // hiding / showing slider content - begging of an animation
+        sliderDisplaying() {
+            const wrapper = document.querySelector('.slider-content');
+            const tn = document.querySelector('.title-wrapper_name');
+            const ts = document.querySelector('.title-wrapper_stack');
+            const desc = document.querySelector('.description-wrapper_content');
+            const icons = document.querySelector('.icons-wrapper');
+
+            const array = [tn, ts, desc, icons];
+
+            wrapper.style.opacity = 1;
+            array.forEach((el, index) => {
+                el.style.animation = `showContent .5s ease-in-out both`;
+            });
+
+            setTimeout(() => {
+                array.forEach(el => {
+                    el.style.animation = 'none';
+                });
+            }, 500);
+        },
+        // slider bottom menu handler
+        clickedSlide() {
+            const ev = event.target;
+            const parent = document.querySelector('.portfolio-slider');
+            const arrayChildren = Array.from(parent.children);
+            const target = arrayChildren.indexOf(ev);
+
+            this.sliderDisplaying();
+
+            this.index = target;
+            this.indexController();
+        },
+        // showing previous slide
         prevSlide() {
+            
+            this.sliderDisplaying();            
+
             this.index--;
             if (!this.projects[this.index]) this.index = (this.projects.length - 1);
             this.indexController();
         },
+        // showing next slide
         nextSlide() {
+            
+            this.sliderDisplaying();
+
             this.index++;
             if (!this.projects[this.index]) this.index = 0;
             this.indexController();
@@ -62,6 +105,9 @@ export default {
         // handling touch event to provide slide effect on mobile devices
         mobileSlideEnd() {
             this.mouseEndX = event.changedTouches[0].clientX;
+            const contentBox = document.querySelector('.slider-content');
+            contentBox.style.transform = 'translateX(0)';
+
             if ((Math.abs(this.mouseEndX-this.mouseStartX)) > 50) {
                 if (this.mouseEndX > this.mouseStartX) {
                     this.nextSlide();
@@ -69,13 +115,26 @@ export default {
                     this.prevSlide();
                 }
             }
+        },
+        // implementing slider typical for mobile devices
+        mobilesSlideTransition() {
+            this.mouseTransition = this.mouseStartX - event.touches[0].clientX;
+            const contentBox = document.querySelector('.slider-content');
+            contentBox.style.transform = `translateX(${this.mouseTransition}px)`;
+            contentBox.style.opacity = `${0.5-Math.abs(this.mouseTransition/1000)}`;
         }
     },
     mounted() {
         this.indexController();
-        const toucher = document.querySelector('.portfolio-wrapper');
+        const toucher = document.querySelector('.slider-content');
         toucher.addEventListener('touchstart', this.mobileSlideStart);
         toucher.addEventListener('touchend', this.mobileSlideEnd);
+        toucher.addEventListener('touchmove', this.mobilesSlideTransition);
+
+        setTimeout(() => {
+            const slider = document.querySelectorAll('.slide');
+            slider.forEach(el => el.addEventListener('click', this.clickedSlide));
+        }, 10);
     }
 };
 </script>
@@ -83,12 +142,24 @@ export default {
 
     $gold: #D4AF37;
 
+@keyframes showContent {
+    0%{
+        opacity: 0;
+        transform: scale(.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 #portfolio {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100vh;
+    z-index: 50;
 
     .portfolio-wrapper {
         display: flex;
@@ -101,13 +172,15 @@ export default {
         text-align: center;
         padding: 10px 5px;
         position: relative;
-        z-index: 40;
+        z-index: 50;
 
         .title-wrapper {
             display: flex;
             flex-flow: column;
             align-items: center;
             justify-content: center;
+
+            transition: all .3s ease-in-out;
 
             .title-wrapper_name {
                 font-size: 1.5em;
@@ -125,6 +198,8 @@ export default {
         .description-wrapper {
             padding: 5px 20px;
             margin: 20px 0;
+
+            transition: all .3s ease-in-out;
         }
 
         .icons-wrapper {
@@ -165,16 +240,16 @@ export default {
             align-items: center;
             justify-content: center;
             position: absolute;
-            bottom: 20%;
+            bottom: 5%;
             left: 0;
             width: 100%;
+            z-index: 50;
 
             .slide {
                 width: 20px;
                 height: 20px;
                 margin: 0 10px;
                 z-index: 50;
-
 
                 border-radius: 50%;
                 border: 2px solid $gold;
@@ -189,11 +264,12 @@ export default {
         .arrows-wrapper {
             width: 100%;
             position: absolute;
-            bottom: 20%;
+            bottom: 5%;
             display: flex;
             flex-flow: row;
             align-items: center;
             justify-content: center;
+            z-index: 50;
 
             .arrows {
                 display: flex;
@@ -227,7 +303,6 @@ export default {
         .portfolio-wrapper {
             font-size: 1.2em;
             width: 80%;
-            z-index: 0;
 
             .title-wrapper {
 
