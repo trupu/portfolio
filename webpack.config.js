@@ -61,6 +61,18 @@ config.module = {
         {
             test: /\.mp3$/,
             loader: 'file-loader'
+        },
+        {
+            test: /\.(gif|png|jpe?g|svg)$/i,
+            use: [
+                'file-loader',
+                {
+                loader: 'image-webpack-loader',
+                options: {
+                    disable: true, // webpack@2.x and newer
+                },
+                },
+            ],
         }
     ]
 }
