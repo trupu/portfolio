@@ -8,7 +8,7 @@
             div.links-wrapper_link
                 <router-link to="/about">About</router-link>
             div.links-wrapper_link(@click='showContact()')
-                <router-link to="#">Contact</router-link>
+                <router-link to="/">Contact</router-link>
         div.links-nav
             div.hamburger(@click='showMenu()')
                 | MENU
@@ -19,6 +19,11 @@
 <script>
 export default {
     name: 'NavBar',
+    data() {
+        return {
+            isScrolling: '',
+        }
+    },
     methods: {
         // Showing nav-bar menu
         showMenu() {
@@ -79,7 +84,20 @@ export default {
                 return;
             }
             this.$parent.showContact = true;
+        },
+        // changing nav`s background onscroll
+        watchForScroll() {
+            const nav = document.querySelector('#navbar');
+            (window.scrollY > 0) ? nav.style.backgroundColor = 'rgba(0,0,0,.8)' : nav.style.backgroundColor = 'rgba(0,0,0,0)';
         }
+    },
+    mounted() {
+        window.addEventListener('scroll', () => {
+            clearInterval(this.isScrolling);
+            this.isScrolling = setTimeout(() => {
+                this.watchForScroll();
+            }, 100);
+        });
     }
 };
 </script>
@@ -148,9 +166,14 @@ export default {
         width: 100%;
         height: 50px;
         position: fixed;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: center;
 
-        top: 50px;
+        top: 40px;
         left: 0;
+        transition: background .5s ease-in-out;
 
         .links-wrapper {
             display: flex;

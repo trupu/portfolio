@@ -215,6 +215,12 @@ export default {
         .about-container {
             .info-wrapper {
                 flex-flow: row;
+
+                .img-holder {
+                    img {
+                        width: 80%;
+                    }
+                }
             }
 
             .info-wrapper:nth-child(2), .info-wrapper:nth-child(4), .info-wrapper:nth-child(6) {
