@@ -10,12 +10,16 @@
 <script>
 export default {
     name: 'LandingPage',
+    mounted() {
+        // showing navbar onload
+        this.$parent.showNavbar = true;
+    }
 };
 </script>
 <style lang='scss'>
     #landing-page{
         width: 100%;
-        height: 100%;
+        height: 100vh;
 
         display: flex;
         align-items: center;

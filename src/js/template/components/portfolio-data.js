@@ -11,7 +11,7 @@ const projects = [
         stack: '(MEVN - MongoDB, Express.js, Vue.js, Node.js)',
         description: 'Gym`s website presenting services, trainers and equipment. Owner is able to change the most important informations (passes` price, coaches, gallery) via admin panel',
         gitlink: 'https://github.com/trupu/powerbeck',
-        preview: 'http://188.68.232.79:9000'
+        preview: 'http://188.68.232.79:8080'
     },
     {
         name: 'Max Weight Calculator',

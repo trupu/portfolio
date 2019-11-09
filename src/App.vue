@@ -1,6 +1,6 @@
 <template lang='pug'>
     section.main
-        <NavBar />
+        <NavBar v-if='showNavbar' />
         <backgroundMusic />
         <router-view></router-view>
         <Contact v-if='showContact' />
@@ -15,12 +15,22 @@ export default {
     data() {
         return {
             showContact: false,
+            showNavbar: true,
         }
+    },
+    methods: {
+        moveToLandingPage(x) {
+            if (x.keyCode !== 27) return;
+            this.$router.back();
+            },
     },
     components: {
         NavBar,
         Contact,
         backgroundMusic
+    },
+    mounted() {
+        this.showNavbar = true;
     }
 }
 </script>
@@ -33,7 +43,7 @@ $gold: #D4AF37;
     color: $gold;
     font-family: 'Open Sans', sans-serif;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     font-size: 16px;
 }
 

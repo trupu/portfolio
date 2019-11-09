@@ -131,6 +131,12 @@ export default {
         toucher.addEventListener('touchend', this.mobileSlideEnd);
         toucher.addEventListener('touchmove', this.mobilesSlideTransition);
 
+        this.$parent.showNavbar = false;
+
+        window.addEventListener('keydown', event => {
+            this.$parent.moveToLandingPage(event);
+        });
+
         setTimeout(() => {
             const slider = document.querySelectorAll('.slide');
             slider.forEach(el => el.addEventListener('click', this.clickedSlide));

@@ -144,7 +144,7 @@ export default {
     }
 
     #navbar {
-        z-index: 50;
+        z-index: 150;
         width: 100%;
         height: 50px;
         position: fixed;
