@@ -65,7 +65,7 @@ export default {
         position: absolute;
         top: 50px;
         left: 50px;
-        z-index: 100;
+        z-index: 150;
 
         .audio-wrapper {
             display: flex;

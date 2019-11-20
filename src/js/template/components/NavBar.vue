@@ -98,6 +98,13 @@ export default {
                 this.watchForScroll();
             }, 100);
         });
+
+        if (window.innerWidth < 768) {
+            const links = document.querySelectorAll('.links-wrapper_link');
+            links.forEach(el => {
+                el.addEventListener('click', this.hideMenu);
+            });
+        }
     }
 };
 </script>
@@ -109,16 +116,16 @@ export default {
         0% {
             z-index: -1;
             opacity: 0;
-            transform: translateY(-1000px);
+            transform: translateY(-100px);
         }
         50%{
-            transform: translateY(-100px);
+            
             opacity: 0;
         }
         100% {
+            transform: translateY(0);
             z-index: 150;
             opacity: 1;
-            transform: translateY(0);
         }
     }
 
@@ -130,12 +137,13 @@ export default {
         }
         50%{
             opacity: 0;
-            transform: translateY(-100px);
+            
         }
         100% {
+            transform: translateY(-100px);
             z-index: -1;
             opacity: 0;
-            transform: translateY(-1000px);
+            
         }
     }
 
@@ -221,6 +229,7 @@ export default {
         #navbar {
             top: 0;
             z-index: 100;
+            height: 60px;
             .links-wrapper {
                 flex-flow: column;
                 font-size: 1.5em;
@@ -229,13 +238,18 @@ export default {
                 position: relative;
                 justify-content: center;
                 display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
 
                 .links-wrapper_link {
                     display: flex;
                     font-size: 1.2em;
                     line-height: 2;
                     width: 100%;
-                    transform: translateY(-1000px);
+
+
+
                     z-index: -1;
 
                     a {

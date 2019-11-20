@@ -13,10 +13,29 @@ export default {
     mounted() {
         // showing navbar onload
         this.$parent.showNavbar = true;
+
+        const main = document.querySelector('.landing-flex-wrapper');
+        main.style.animation = 'showLandingPage .5s ease-in-out both';
+    },
+    destroyed() {
+        this.$parent.showContact = false;
     }
 };
 </script>
 <style lang='scss'>
+
+@keyframes showLandingPage {
+    0%{
+        transform: scale(.6);
+        opacity: 0;
+    }
+    100% {
+        transfrom: scale(1);
+        opacity: 1;
+    }
+}
+
+
     #landing-page{
         width: 100%;
         height: 100vh;
@@ -24,6 +43,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        text-shadow: 0 0 2px #000;
 
 
         .landing-flex-wrapper {

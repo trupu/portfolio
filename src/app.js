@@ -1,6 +1,6 @@
 import './scss/app.scss';
 import App from './App.vue';
-import particles from './js/particles/particles';
+// import particles from './js/particles/particles';
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';

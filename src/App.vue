@@ -9,6 +9,7 @@
 import NavBar from './js/template/components/NavBar.vue';
 import Contact from './js/template/Contact.vue';
 import backgroundMusic from './js/template/components/backgroundMusic.vue';
+import particlesConfig from './js/particles/particlesConfig';
 
 export default {
     name: 'App',
@@ -16,13 +17,15 @@ export default {
         return {
             showContact: false,
             showNavbar: true,
+            particlesConfig,
+            particlesTimeout: ''
         }
     },
     methods: {
         moveToLandingPage(x) {
             if (x.keyCode !== 27) return;
-            this.$router.back();
-            },
+            this.$router.replace('/', () => {}, () => {});
+        }
     },
     components: {
         NavBar,
@@ -31,6 +34,9 @@ export default {
     },
     mounted() {
         this.showNavbar = true;
+        this.particlesTimeout = setTimeout(() => {
+            particlesJS("particles-js", this.particlesConfig);
+        }, 0);
     }
 }
 </script>

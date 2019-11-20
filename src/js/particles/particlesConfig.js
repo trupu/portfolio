@@ -1,4 +1,4 @@
-particlesJS("particles-js", {
+export default {
     "particles": {
       "number": {
         "value": 1000,
@@ -8,7 +8,7 @@ particlesJS("particles-js", {
         }
       },
       "color": {
-        "value": "#D4AF37"
+        "value": "D4AF37"
       },
       "shape": {
         "type": "circle",
@@ -36,7 +36,7 @@ particlesJS("particles-js", {
         }
       },
       "size": {
-        "value": 3,
+        "value": 4.5,
         "random": true,
         "anim": {
           "enable": true,
@@ -107,4 +107,4 @@ particlesJS("particles-js", {
       }
     },
     "retina_detect": true
-  });
+  };

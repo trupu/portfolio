@@ -6,7 +6,7 @@
                     h3
                         | Personal Information
                     p.content
-                        | My name is Sławek Trubiłowicz and I am 20years old. I live in Kożuchów, Poland. I`ve been dreaming about being computer programmer since I graduated from secondary school. Thats probably why I`ve chosen the IT Specialist specialisation in highschool. School gave me some IT background knowledge, which I`m continuously developing. I`m rather an introvert and strict mind, what appears in my hobby - about later :)
+                        | My name is Sławek Trubiłowicz, I`m 20years old, living in Kożuchów, Poland. I`ve been dreaming about being computer programmer since I graduated from secondary school. Thats probably why I`ve chosen the IT Specialist specialisation in highschool. School gave me some IT background knowledge, which I`m continuously developing. I`m rather an introvert and strict mind, what appears in my hobby - about later :)
                 div.img-holder
                     img(src='../../img/okladka.jpg')    
             div.info-wrapper
@@ -14,7 +14,7 @@
                     h3
                         | Skills
                     p.content
-                        | I know that I`m a junior developer, without the industry experience. However, I`ve developed some skills needed as a Web Developer. <br /> Technologies I`ve been working with: 
+                        | Although I`m a junior developer, without the industry experience, I`ve developed some skills needed as a Web Developer. <br /> Technologies I`ve been working with: 
                         ul.skills-list
                             li
                                 | Standard:
@@ -76,6 +76,10 @@
                             | 23.05.2018r.
                         p.content
                             | I was a competitor in finals of national IT competitions 'IT and cyber security' in Warsaw
+                        p.content
+                            | Currently:
+                        p.content
+                            | First year student of computer science on University of Zielona Góra
                 div.img-holder
                     img(src='../../img/graduation.png')
             div.info-wrapper
@@ -83,28 +87,160 @@
                     h3
                         | Hobby
                     p.content
-                        | Mainly I`m a powerlifter, however I also love to play logical games (like chess). Furthermore Math and Physics (I`m into astrophysics) aren`t scary for me :)
+                        | Mainly I`m a powerlifter, however I also love to play logical games (like chess). Furthermore Math and Physics (I`m into astrophysics) aren`t scary to me :)
                 div.img-holder
                     img(src='../../img/atom.png')
+            <back />
 </template>
 <script>
+import back from './components/back.vue';
+import particlesConfig from '../particles/particlesConfig';
+
 export default {
     name: 'About',
+    data() {
+        return {
+            particlesConfig,
+            wheelTimeout: ''
+        }
+    },
+    components: {
+        back
+    },
+    methods: {
+        checkForPushedKey(x) {
+            if (x.keyCode == 37) {
+                this.prevElement();
+            } else if (x.keyCode == 39) {
+                this.nextElement();
+            }
+        },
+        checkForScroll(x) {
+            x.deltaY > 0 ? this.nextElement() : this.prevElement();
+        },
+        showElement(el) {
+            el.style.opacity = 1;
+            el.classList.toggle('about-active');
+            const img = el.querySelector('.img-holder');
+            const content = el.querySelector('.content-wrapper');
+
+            img.style.display = 'flex';
+            content.style.display = 'flex';
+
+            setTimeout(() => {
+                img.style.animation = 'showAbout .4s ease-in-out both';
+                content.style.animation = 'showAboutReverse .4s ease-in-out both';
+            }, 10);
+        },
+        hideElement(el) {
+            el.classList.toggle('about-active');
+            const img = el.querySelector('.img-holder');
+            const content = el.querySelector('.content-wrapper');
+
+            img.style.animation = 'hideAbout .4s ease-in-out both';
+            content.style.animation = 'hideAboutReverse .4s ease-in-out both';
+
+            setTimeout(() => {
+                img.style.display = 'none';
+                content.style.display = 'none';
+            }, 510);
+            el.style.opacity = 0;
+        },
+        prevElement() {
+            const elements = document.querySelectorAll('.info-wrapper');
+            const eArray = Array.from(elements);
+
+            const current = document.querySelector('.about-active');
+            const index = eArray.indexOf(current);
+            
+            this.hideElement(current);
+            (!elements[index-1]) ? this.showElement(elements[(elements.length-1)]) : this.showElement(elements[index-1]);
+        },
+        nextElement() {
+            const elements = document.querySelectorAll('.info-wrapper');
+            const eArray = Array.from(elements);
+
+            const current = document.querySelector('.about-active');
+            const index = eArray.indexOf(current);
+            
+            this.hideElement(current);
+            (!elements[index+1]) ? this.showElement(elements[0]) : this.showElement(elements[index+1]);
+        }
+    },
     mounted() {
+
         window.addEventListener('keydown', event => {
             this.$parent.moveToLandingPage(event);
         });
+        const first = document.querySelector('.info-wrapper');
+        this.showElement(first);
+
+        window.addEventListener('keydown', event => {
+            this.checkForPushedKey(event);
+        });
+        if (window.innerWidth > 768) {
+            this.$parent.showNavbar = false;
+            window.addEventListener('wheel', event => {
+                clearTimeout(this.wheelTimeout);
+                this.wheelTimeout = setTimeout(() => {
+                    this.checkForScroll(event);
+                }, 300);
+            });
+        }
     }
 };
 </script>
 <style lang="scss">
+
+@keyframes showAbout {
+    0% {
+        opacity: 0;
+        transform: translateY(200px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes showAboutReverse {
+    0% {
+        opacity: 0;
+        transform: translateY(-200px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hideAbout {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(200px);
+    }
+}
+
+@keyframes hideAboutReverse {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-200px);
+    }
+}
 
 .main {
     z-index: 30;
 }
 
 #about {
-    overflow-y: hidden;
     height: auto;
     z-index: 30;
     width: 100%;
@@ -121,6 +257,8 @@ export default {
             text-align: center;
             z-index: 30;
             width: 100%;
+            transition: opacity .3s ease-in-out;
+            text-shadow: 0 0 2px #000;
 
             .img-holder {
                 display: flex;
@@ -131,6 +269,7 @@ export default {
                 object-fit: cover;
                 z-index: 30;
                 margin: 20px 0;
+
                 img {
                     width: 80%;
                     z-index: 30;
@@ -194,7 +333,7 @@ export default {
                 }
                 .content-wrapper {
                     font-size: 1.2em;
-
+                    
                     p {
                         .skills-list {
                             padding: 0 20px;
@@ -212,14 +351,32 @@ export default {
 
 @media (min-width: 768px) {
     #about {
+        width: 100%;
+        overflow: hidden;
         .about-container {
+            padding: 0;
             .info-wrapper {
-                flex-flow: row;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
 
+                padding: 50px 20px;
+
+                flex-flow: row;
+                font-size: .8em;
+                opacity: 0;
                 .img-holder {
+                    animation: hideAboutReverse 0s ease-in-out both;
+                    display: none;
                     img {
                         width: 80%;
                     }
+                }
+                .content-wrapper {
+                    animation: hideAbout 0s ease-in-out both;
+                    display: none;
                 }
             }
 

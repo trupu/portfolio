@@ -25,8 +25,10 @@
                 div.arrows
                     i(class='fas fa-chevron-left arrow' @click='prevSlide()')
                     i(class='fas fa-chevron-right arrow' @click='nextSlide()')
+        <back />
 </template>
 <script>
+import back from './components/back.vue';
 import portfolioData from './components/portfolio-data';
 
 export default {
@@ -39,6 +41,9 @@ export default {
             mouseEndX: 0,
             mouseTransition: 0
         }
+    },
+    components: {
+        back
     },
     methods: {
         // hiding / showing slider content - begging of an animation
@@ -125,13 +130,16 @@ export default {
         }
     },
     mounted() {
+
         this.indexController();
         const toucher = document.querySelector('.slider-content');
         toucher.addEventListener('touchstart', this.mobileSlideStart);
         toucher.addEventListener('touchend', this.mobileSlideEnd);
         toucher.addEventListener('touchmove', this.mobilesSlideTransition);
 
-        this.$parent.showNavbar = false;
+        if (window.innerWidth > 768) {
+            this.$parent.showNavbar = false;
+        }
 
         window.addEventListener('keydown', event => {
             this.$parent.moveToLandingPage(event);
@@ -172,6 +180,7 @@ export default {
         flex-flow: column;
         align-items: center;
         justify-content: center;
+        position: relative;
 
         width: 100%;
         height: 100%;
@@ -179,6 +188,9 @@ export default {
         padding: 10px 5px;
         position: relative;
         z-index: 50;
+        text-shadow: 0 0 2px #000;
+
+        animation: showContent .5s ease-in-out both;
 
         .title-wrapper {
             display: flex;
