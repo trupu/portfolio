@@ -62,7 +62,7 @@
                                 li
                                     | Eslint
                 div.img-holder
-                    img(src='../../img/webpacklogo.png')
+                    img(src='../../img/tesseract.png')
             div.info-wrapper
                 div.content-wrapper
                     h3
@@ -81,7 +81,7 @@
                         p.content
                             | First year student of computer science on University of Zielona Góra
                 div.img-holder
-                    img(src='../../img/graduation.png')
+                    img(src='../../img/five.png')
             div.info-wrapper
                 div.content-wrapper
                     h3
@@ -271,7 +271,7 @@ export default {
                 margin: 20px 0;
 
                 img {
-                    width: 80%;
+                    width: 60%;
                     z-index: 30;
                 }
             }
@@ -371,7 +371,7 @@ export default {
                     animation: hideAboutReverse 0s ease-in-out both;
                     display: none;
                     img {
-                        width: 80%;
+                        width: 70%;
                     }
                 }
                 .content-wrapper {

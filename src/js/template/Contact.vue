@@ -5,9 +5,12 @@
                 a.contact-box_wrapper__content(v-if='keys.link' :href='keys.link' target='blank')
                     i(:class='keys.icon')
                     | {{ keys.value }}
-                span.contact-box_wrapper__content(v-if='!keys.link')
+                span.contact-box_wrapper__content(v-if='!keys.link && !keys.pushLink')
                     i(:class='keys.icon')
                     | {{ keys.value }}
+                router-link.contact-box_wrapper__content(to='/email' v-if='keys.pushLink')
+                    i(:class='keys.icon')
+                    | {{ keys.value }} 
 </template>
 <script>
 export default {
@@ -27,6 +30,7 @@ export default {
                 },
                 mail: {
                     value: 'strubilowicz@zsp5kozuchow.pl',
+                    pushLink: '/email',
                     icon: 'far fa-envelope',
                 },
                 telephone: {
