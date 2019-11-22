@@ -1,14 +1,14 @@
 export default {
     "particles": {
       "number": {
-        "value": 1000,
+        "value": 500,
         "density": {
           "enable": true,
           "value_area": 789.1476416322727
         }
       },
       "color": {
-        "value": "D4AF37"
+        "value": "#00ffff"
       },
       "shape": {
         "type": "circle",
@@ -36,7 +36,7 @@ export default {
         }
       },
       "size": {
-        "value": 4.5,
+        "value": 3,
         "random": true,
         "anim": {
           "enable": true,
