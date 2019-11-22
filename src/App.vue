@@ -59,7 +59,6 @@ export default {
             if (timer < 1500) {
                 setTimeout(() => {
                     this.hidePreloader();
-                    console.log(`Time: ${Date.now()-this.timer}`);
                 }, (1500-timer));
             } else {
                 this.hidePreloader();
