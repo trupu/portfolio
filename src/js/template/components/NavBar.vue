@@ -170,7 +170,7 @@ export default {
     }
 
     #navbar {
-        z-index: 150;
+        z-index: 400;
         width: 100%;
         height: 50px;
         position: fixed;
@@ -228,7 +228,7 @@ export default {
     @media (max-width: 768px) {
         #navbar {
             top: 0;
-            z-index: 100;
+            z-index: 400;
             height: 60px;
             .links-wrapper {
                 flex-flow: column;

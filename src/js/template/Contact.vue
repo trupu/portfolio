@@ -17,7 +17,7 @@ export default {
             informations: {
                 facebook: {
                     value: 'Facebook',
-                    link: 'https://facebook.com',
+                    link: 'https://www.facebook.com/people/Sławek-Trubiłowicz/100007242794470',
                     icon: 'fab fa-facebook'
                 },
                 github: {
@@ -145,6 +145,7 @@ export default {
     @media (max-width: 480px) {
         #contact {
             .contact-box {
+                background-color: rgba(0,0,0,.5);
                 .contact-box_wrapper {
                     .contact-box_wrapper__content {
                         font-size: .6em;
