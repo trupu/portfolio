@@ -91,9 +91,11 @@
                 div.img-holder
                     img(src='../../img/atom.png')
             <back />
+            <scroll />
 </template>
 <script>
 import back from './components/back.vue';
+import scroll from './components/scroll.vue';
 import particlesConfig from '../particles/particlesConfig';
 
 export default {
@@ -105,7 +107,8 @@ export default {
         }
     },
     components: {
-        back
+        back,
+        scroll
     },
     methods: {
         checkForPushedKey(x) {
