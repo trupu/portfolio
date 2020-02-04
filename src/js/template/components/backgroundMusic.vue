@@ -5,12 +5,11 @@
             i(class='fas fa-volume-mute' v-if='!volumeUp' @click='audioClick()')
             div.audio-wrapper_content
                 p.author
-                    | {{ audioAuthor }}
+                    | {{ audioList[0].author }}
                 p.name
-                    | {{ audioName }}
+                    | {{ audioList[0].title }}
 </template>
 <script>
-import Cookie from 'js-cookie';
 import Music from '../../../background.mp3';
 
 export default {
@@ -20,39 +19,55 @@ export default {
             volumeUp: true,
             audio: '',
             Music,
-            audioAuthor: 'Hans Zimmer',
-            audioName: '(S.T.A.Y) Interstellar - Main Theme'
+            audioList: [
+                {
+                    author: 'Hans Zimmer',
+                    title: '(S.T.A.Y) Interstellar - Main Theme'
+                }
+            ]
         }
     },
     methods: {
         async audioConf() {
             const song = await this.Music;
+            console.log(song);
             if (song) this.audio = new Audio(song);
+
             this.audio.muted = true;
             this.volumeUp = false;
-            this.audio.autoplay = true;
             this.audio.volume = 0.2;
             this.audio.addEventListener('ended', () => {
-                this.audio.duration = 0;
-                this.audio.play();
+                window.sessionStorage.setItem('playing', false);
+                this.audio.muted = true;
+                this.volumeUp = false;
             });
-            const isMuted = Cookie.set('muted', true);
         },
         audioClick() {
             const audio = this.audio;
+
+            // checking if session exists
+            if (!this.audioStatus()) {
+                audio.play();
+            }
+
             if (this.volumeUp) {
                 audio.muted = true;
                 this.volumeUp = false;
-                Cookie.set('muted', true);
             } else {
                 audio.muted = false;
                 this.volumeUp = true;
-                Cookie.set('muted', false);
             }
+        },
+        audioStatus() {
+            const audioStatus = window.sessionStorage.getItem('playing');
+            return audioStatus ? true : false;
         }
     },
     mounted() {
             this.audioConf();
+    },
+    destroyed() {
+        window.sessionStorage.setItem('playing', false);
     }
 };
 
@@ -65,17 +80,19 @@ export default {
         position: absolute;
         top: 50px;
         left: 50px;
-        z-index: 150;
+        z-index: 140;
 
         .audio-wrapper {
             display: flex;
             flex-flow: row;
             align-items: center;
             justify-content: center;
+            z-index: 141;
 
             i {
                 font-size: 2em;
                 transition: all .3s ease-in-out;
+                z-index: 142;
 
                 &:hover {
                     color: lighten($gold, 20);

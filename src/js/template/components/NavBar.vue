@@ -25,8 +25,15 @@ export default {
         }
     },
     methods: {
+        // navbar relative positioning
+        layoutLayers(el, x) {
+            (el.style.zIndex > x) ? el.style.zIndex = x-50 : el.style.zIndex = x+10;
+        },
         // Showing nav-bar menu
         showMenu() {
+            const nav = document.querySelector('#navbar');
+            this.layoutLayers(nav, 150);
+
             const links = document.querySelectorAll('.links-wrapper_link');
             const link = document.querySelector('.links-wrapper');
             const buttonH = document.querySelector('.hamburger');
@@ -50,6 +57,9 @@ export default {
         },
         // hiding nav-bar menu
         hideMenu() {
+            const nav = document.querySelector('#navbar');
+            this.layoutLayers(nav, 150);
+            
             const links = document.querySelectorAll('.links-wrapper_link');
             const link = document.querySelector('.links-wrapper');
             const buttonH = document.querySelector('.hamburger');
@@ -170,7 +180,7 @@ export default {
     }
 
     #navbar {
-        z-index: 400;
+        z-index: 100;
         width: 100%;
         height: 50px;
         position: fixed;
@@ -228,7 +238,7 @@ export default {
     @media (max-width: 768px) {
         #navbar {
             top: 0;
-            z-index: 400;
+            z-index: 100;
             height: 60px;
             .links-wrapper {
                 flex-flow: column;
