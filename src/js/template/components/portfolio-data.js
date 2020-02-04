@@ -14,11 +14,11 @@ const projects = [
         preview: 'http://188.68.232.79:8080'
     },
     {
-        name: 'Max Weight Calculator',
-        stack: '(Javascript ES6+)',
-        description: 'Helping powerlifters calculate max weight they`re able to lift',
-        gitlink: 'https://github.com/trupu/calculator',
-        preview: '#'
+        name: 'Photovoltaics - Grzegorz Chabior',
+        stack: '(Vue.js)',
+        description: 'My first professional order - website presenting customer`s Photovoltaics company. Site contains 5 different sections and installation cost calculator',
+        gitlink: 'https://github.com/trupu/photovoltaics',
+        preview: 'https://fotowoltaika-grzegorz.netlify.com'
     }
 ]
 
