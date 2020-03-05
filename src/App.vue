@@ -19,6 +19,7 @@ export default {
         return {
             showContact: false,
             showNavbar: true,
+            navTimeout: '',
             particlesConfig,
             particlesTimeout: '',
             timer: Date.now()
@@ -39,6 +40,12 @@ export default {
             setTimeout(() => {
                 preload.style.display = 'none';
             }, 510);
+        },
+        displayingNavbar(delay = 100) {
+            clearTimeout(this.navTimeout);
+            this.navTimeout = setTimeout(() => {
+                (window.innerWidth > 768) ? this.showNavbar = true : this.showNavbar = true;
+            }, delay);
         }
     },
     components: {

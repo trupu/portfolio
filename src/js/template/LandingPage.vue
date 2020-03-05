@@ -16,9 +16,12 @@ export default {
 
         const main = document.querySelector('.landing-flex-wrapper');
         main.style.animation = 'showLandingPage .5s ease-in-out both';
+
+        window.addEventListener('resize', this.$parent.displayingNavbar);
     },
     destroyed() {
         this.$parent.showContact = false;
+        window.removeEventListener('resize', this.$parent.displayingNavbar);
     }
 };
 </script>

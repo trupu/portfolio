@@ -16,6 +16,7 @@ export default {
     name: 'backgroundMusic',
     data() {
         return {
+            playing: false,
             volumeUp: true,
             audio: '',
             Music,
@@ -30,24 +31,32 @@ export default {
     methods: {
         async audioConf() {
             const song = await this.Music;
-            console.log(song);
             if (song) this.audio = new Audio(song);
 
             this.audio.muted = true;
             this.volumeUp = false;
             this.audio.volume = 0.2;
             this.audio.addEventListener('ended', () => {
-                window.sessionStorage.setItem('playing', false);
+                window.localStorage.setItem('playing', false);
+                this.playing = false;
                 this.audio.muted = true;
                 this.volumeUp = false;
             });
         },
-        audioClick() {
+        async audioClick() {
             const audio = this.audio;
 
+            const status = await this.audioStatus();
             // checking if session exists
-            if (!this.audioStatus()) {
+            /*
+            if (!status) {
                 audio.play();
+                window.localStorage.setItem('playing', true);
+            }
+            */
+            if (!this.playing) {
+                audio.play();
+                this.playing = true;
             }
 
             if (this.volumeUp) {
@@ -59,15 +68,14 @@ export default {
             }
         },
         audioStatus() {
-            const audioStatus = window.sessionStorage.getItem('playing');
-            return audioStatus ? true : false;
+            const audioStatus = window.localStorage.getItem('playing');
+            return audioStatus ? audioStatus : false;
         }
     },
     mounted() {
-            this.audioConf();
+        this.audioConf();
     },
     destroyed() {
-        window.sessionStorage.setItem('playing', false);
     }
 };
 
