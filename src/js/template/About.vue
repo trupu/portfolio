@@ -210,8 +210,8 @@ export default {
                 setTimeout(() => {
                     const first = document.querySelector('.info-wrapper');
                     this.showElement(first);
+                    window.addEventListener('wheel', this.scrollHandler);
                 }, 550);
-                window.addEventListener('wheel', this.scrollHandler);
             } else {
                 this.$parent.showNavbar = true;
                 window.removeEventListener('wheel', this.scrollHandler);
