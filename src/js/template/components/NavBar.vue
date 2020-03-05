@@ -98,7 +98,9 @@ export default {
         // changing nav`s background onscroll
         watchForScroll() {
             const nav = document.querySelector('#navbar');
-            (window.scrollY > 0) ? nav.style.backgroundColor = 'rgba(0,0,0,.8)' : nav.style.backgroundColor = 'rgba(0,0,0,0)';
+            if (nav) {
+                (window.scrollY > 0) ? nav.style.backgroundColor = 'rgba(0,0,0,.8)' : nav.style.backgroundColor = 'rgba(0,0,0,0)';
+            }
         }
     },
     mounted() {
