@@ -8,7 +8,7 @@
                     p.content
                         | My name is Sławek Trubiłowicz, I`m 20years old, living in Kożuchów, Poland. I`ve been dreaming about being computer programmer since I graduated from secondary school. Thats probably why I`ve chosen the IT Specialist specialisation in highschool. School gave me some IT background knowledge, which I`m continuously developing. I`m rather an introvert and strict mind, what appears in my hobby - about later :)
                 div.img-holder
-                    img(src='../../img/okladka.jpg')    
+                    img(src='../../img/me.png')    
             div.info-wrapper
                 div.content-wrapper
                     h3
@@ -24,7 +24,7 @@
                                 li
                                     | CSS3(RWD - Flexbox, CSS Grid, Bootstrap),
                                 li
-                                    | JS (jQuery, ES6, ES8 Promises, ES10+ fe. Optional Chaining),
+                                    | JS (jQuery, ES6, ES8 Promises, ESNext fe. Optional Chaining),
                             li
                                 | Frameworks:
                             ol
@@ -32,6 +32,8 @@
                                     | Vue.js (Templates, SFC, Clientside Routing, Data manipulation),
                                 li
                                     | Express.js (REST Api, http/https Web Server),
+                                li
+                                    | Nest.js (Basic knowledge)
                             li
                                 | Tools:
                             ol
@@ -103,7 +105,8 @@ export default {
     data() {
         return {
             particlesConfig,
-            wheelTimeout: ''
+            wheelTimeout: '',
+            resizeTimeout: ''
         }
     },
     components: {
@@ -111,6 +114,7 @@ export default {
         scroll
     },
     methods: {
+        // handling user`s key interraction
         checkForPushedKey(x) {
             if (x.keyCode == 37) {
                 this.prevElement();
@@ -118,9 +122,18 @@ export default {
                 this.nextElement();
             }
         },
+        // checking if user scrolled
         checkForScroll(x) {
             x.deltaY > 0 ? this.nextElement() : this.prevElement();
         },
+        // handling events for different resolutions
+        scrollHandler(event) {
+            clearTimeout(this.wheelTimeout);
+            this.wheelTimeout = setTimeout(() => {
+                this.checkForScroll(event);
+            }, 300);
+        },
+        // showing element
         showElement(el) {
             el.style.opacity = 1;
             el.classList.toggle('about-active');
@@ -135,6 +148,7 @@ export default {
                 content.style.animation = 'showAboutReverse .4s ease-in-out both';
             }, 10);
         },
+        // hiding element
         hideElement(el) {
             el.classList.toggle('about-active');
             const img = el.querySelector('.img-holder');
@@ -149,6 +163,24 @@ export default {
             }, 510);
             el.style.opacity = 0;
         },
+        // showing hidden elements while changing window width 
+        showHiddenElements() {
+            const info = document.querySelectorAll('.info-wrapper');
+            const hidden = Array.from(info).map(el => {
+                if (!el.classList.contains('about-active')) {
+                    this.showElement(el);
+                }
+            });
+        },
+        // hiding every element & showing just the first one
+        hideShowedElements() {
+            const info = document.querySelectorAll('.info-wrapper');
+            const showed = Array.from(info).map(el => {
+                this.hideElement(el);
+                if (el.classList.contains('about-active')) el.classList.remove('about-active');
+            });
+        },
+        // previous element
         prevElement() {
             const elements = document.querySelectorAll('.info-wrapper');
             const eArray = Array.from(elements);
@@ -159,6 +191,7 @@ export default {
             this.hideElement(current);
             (!elements[index-1]) ? this.showElement(elements[(elements.length-1)]) : this.showElement(elements[index-1]);
         },
+        // next element
         nextElement() {
             const elements = document.querySelectorAll('.info-wrapper');
             const eArray = Array.from(elements);
@@ -168,6 +201,28 @@ export default {
             
             this.hideElement(current);
             (!elements[index+1]) ? this.showElement(elements[0]) : this.showElement(elements[index+1]);
+        },
+        // handling functionalities for different resolutions
+        functionalityHandler() {
+            if (window.innerWidth > 768) {
+                this.$parent.showNavbar = false;
+                this.hideShowedElements();
+                setTimeout(() => {
+                    const first = document.querySelector('.info-wrapper');
+                    this.showElement(first);
+                }, 550);
+                window.addEventListener('wheel', this.scrollHandler);
+            } else {
+                this.$parent.showNavbar = true;
+                window.removeEventListener('wheel', this.scrollHandler);
+                this.showHiddenElements();
+            }
+        },
+        resizeHandler() {
+            clearTimeout(this.resizeTimeout);
+            this.resizeTimeout = setTimeout(() => {
+                this.functionalityHandler();
+            }, 100);
         }
     },
     mounted() {
@@ -175,21 +230,17 @@ export default {
         window.addEventListener('keydown', event => {
             this.$parent.moveToLandingPage(event);
         });
-        const first = document.querySelector('.info-wrapper');
-        this.showElement(first);
 
         window.addEventListener('keydown', event => {
             this.checkForPushedKey(event);
         });
-        if (window.innerWidth > 768) {
-            this.$parent.showNavbar = false;
-            window.addEventListener('wheel', event => {
-                clearTimeout(this.wheelTimeout);
-                this.wheelTimeout = setTimeout(() => {
-                    this.checkForScroll(event);
-                }, 300);
-            });
-        }
+        // switching between functions depending on the window size
+        this.functionalityHandler();
+
+        window.addEventListener('resize', this.resizeHandler);
+    },
+    destroyed() {
+        window.removeEventListener('resize', this.resizeHandler);
     }
 };
 </script>
@@ -274,7 +325,7 @@ export default {
                 margin: 20px 0;
 
                 img {
-                    width: 60%;
+                    width: 90%;
                     z-index: 30;
                 }
             }
@@ -300,6 +351,7 @@ export default {
                     font-size: 1em;
                     padding: 5px 10px;
                     z-index: 30;
+                    line-height: 2;
 
                     .skills-list{
                         list-style-type: none;
@@ -331,7 +383,8 @@ export default {
                 padding: 30px 0;
                 .img-holder {
                     img {
-                        width: 40%;
+                        width: 80%;
+                        border-radius: 5px;
                     }
                 }
                 .content-wrapper {
