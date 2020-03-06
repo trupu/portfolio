@@ -16,6 +16,7 @@
                         span.content
                             | Github
                     a.preview(:href='projects[index].preview' target='blank')
+                        div.not-available(v-if='!projects[index].availibility' :title='projects[index].message')
                         i(class='far fa-file-code')
                         span.content
                             | Preview
@@ -237,8 +238,24 @@ export default {
                 align-items: center;
                 justify-content: center;
                 color: $gold;
+                position: relative;
 
                 transition: all .3s ease-in-out;
+
+                .not-available {
+                    display: flex;
+
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+
+                    z-index: 60;
+                    transform: scale(1.2);
+
+                    background-color: rgba(0,0,0,.5);
+                }
 
                 .content {
                     font-size: .9em;
