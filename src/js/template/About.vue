@@ -29,7 +29,7 @@
                                 | Frameworks:
                             ol
                                 li
-                                    | Vue.js (Templates, SFC, Clientside Routing, Data manipulation),
+                                    | Vue.js (Templates, SFC, Clientside Routing, Data manipulation, SPA, MPA),
                                 li
                                     | Express.js (REST Api, http/https Web Server),
                                 li
