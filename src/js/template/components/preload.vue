@@ -2,10 +2,10 @@
     section#preload
         div.preload-flex
             svg.circle
-                circle(cx='100' cy='100' r='97')
-                circle(cx='100' cy='100' r='92')
+                circle(cx='150' cy='150' r='117')
+                circle(cx='150' cy='150' r='110')
             div.preload-title
-                | Trupu
+                | Limitless
 </template>
 <script>
 export default {
@@ -104,8 +104,8 @@ export default {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 200px;
-                height: 200px;
+                width: 300px;
+                height: 300px;
 
                 circle {
                     fill: #000;
@@ -140,7 +140,7 @@ export default {
                 left: 0;
 
                 width: 100%;
-                height: 200px;
+                height: 300px;
                 font-size: 1.5em;
 
                 animation: changeTitleColor 2s ease-in-out infinite;
