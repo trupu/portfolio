@@ -28,3 +28,9 @@ yarn run dev
 
 yarn run build
 ```
+
+### Server
+```
+
+http://localhost:9000
+```
