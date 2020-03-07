@@ -22,6 +22,7 @@ export default {
     data() {
         return {
             isScrolling: '',
+            widthTimeout: ''
         }
     },
     methods: {
@@ -101,6 +102,15 @@ export default {
             if (nav) {
                 (window.scrollY > 0) ? nav.style.backgroundColor = 'rgba(0,0,0,.8)' : nav.style.backgroundColor = 'rgba(0,0,0,0)';
             }
+        },
+        // checking if user uses mobile phone or computer
+        checkScreenWidth() {
+            const links = document.querySelectorAll('.links-wrapper_link');
+            if (window.innerWidth < 768) {
+                links.forEach(el => el.addEventListener('click', this.hideMenu));
+            } else {
+                links.forEach(el => el.removeEventListener('click', this.hideMenu));
+            }
         }
     },
     mounted() {
@@ -110,13 +120,17 @@ export default {
                 this.watchForScroll();
             }, 100);
         });
+        
+        // checking screen width
 
-        if (window.innerWidth < 768) {
-            const links = document.querySelectorAll('.links-wrapper_link');
-            links.forEach(el => {
-                el.addEventListener('click', this.hideMenu);
-            });
-        }
+        this.checkScreenWidth();
+        window.addEventListener('resize', () => {
+            clearTimeout(this.widthTimeout);
+            this.widthTimeout = setTimeout(() => {
+                this.checkScreenWidth();
+            }, 100);
+        });
+
     }
 };
 </script>

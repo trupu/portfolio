@@ -150,6 +150,9 @@ export default {
             const slider = document.querySelectorAll('.slide');
             slider.forEach(el => el.addEventListener('click', this.clickedSlide));
         }, 10);
+    },
+    destroyed() {
+        this.$parent.showNavbar = true;
     }
 };
 </script>

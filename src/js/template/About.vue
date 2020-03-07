@@ -240,6 +240,8 @@ export default {
         window.addEventListener('resize', this.resizeHandler);
     },
     destroyed() {
+        this.$parent.showNavbar = true;
+        
         window.removeEventListener('resize', this.resizeHandler);
     }
 };

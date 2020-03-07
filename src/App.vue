@@ -42,10 +42,11 @@ export default {
             }, 510);
         },
         displayingNavbar(delay = 100) {
-            clearTimeout(this.navTimeout);
-            this.navTimeout = setTimeout(() => {
-                (window.innerWidth > 768) ? this.showNavbar = true : this.showNavbar = true;
-            }, delay);
+            const linksWrapper = document.querySelector('.links-wrapper');
+            const links = document.querySelectorAll('.links-wrapper_link');
+            
+            linksWrapper.style.display = 'flex';
+            links.forEach(el => el.style.animation = '');
         }
     },
     components: {
