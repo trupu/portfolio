@@ -22,7 +22,7 @@ const projects = [
         stack: '(Vue.js)',
         description: 'My first professional order - website presenting customer`s Photovoltaics company. Site contains 5 different sections and installation cost calculator',
         gitlink: 'https://github.com/trupu/photovoltaics',
-        preview: 'https://fotowoltaika-grzegorz.netlify.com',
+        preview: 'https://dobre-panele.pl',
         availibility: true,
         message: ''
     }

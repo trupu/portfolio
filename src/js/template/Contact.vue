@@ -2,10 +2,10 @@
     section#contact
         div.contact-box
             div.contact-box_wrapper(v-for='keys in informations')
-                a.contact-box_wrapper__content(v-if='keys.link' :href='keys.link' target='blank')
+                a.contact-box_wrapper__content(v-if='keys.link' :href='keys.link' :target='keys.target')
                     i(:class='keys.icon')
                     | {{ keys.value }}
-                span.contact-box_wrapper__content(v-if='!keys.link && !keys.pushLink')
+                span.contact-box_wrapper__content(v-if='!keys.link && !keys.pushLink && !keys.tel')
                     i(:class='keys.icon')
                     | {{ keys.value }}
                 router-link.contact-box_wrapper__content(to='/email' v-if='keys.pushLink')
@@ -21,12 +21,14 @@ export default {
                 facebook: {
                     value: 'Facebook',
                     link: 'https://www.facebook.com/people/Sławek-Trubiłowicz/100007242794470',
-                    icon: 'fab fa-facebook'
+                    icon: 'fab fa-facebook',
+                    target: 'blank'
                 },
                 github: {
                     value: 'Github',
                     link: 'https://github.com/trupu',
                     icon: 'fab fa-github',
+                    target: 'blank'
                 },
                 mail: {
                     value: 'strubilowicz@zsp5kozuchow.pl',
@@ -35,7 +37,9 @@ export default {
                 },
                 telephone: {
                     value: '693 012 101',
+                    link: 'tel:+48693012101',
                     icon: 'fas fa-phone',
+                    target: ''
                 }
             }
         }
