@@ -194,9 +194,7 @@ export default {
 
                     &:hover {
                         cursor: pointer;
-                        border: 1px solid $gold;
-                        background: none;
-                        color: $gold;
+                        color: #fff;
                     }
                 }
             }
