@@ -242,6 +242,7 @@ export default {
     destroyed() {
         this.$parent.showNavbar = true;
         
+        window.removeEventListener('wheel', this.scrollHandler);
         window.removeEventListener('resize', this.resizeHandler);
     }
 };
