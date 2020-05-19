@@ -47,13 +47,7 @@ export default {
             const audio = this.audio;
 
             const status = await this.audioStatus();
-            // checking if session exists
-            /*
-            if (!status) {
-                audio.play();
-                window.localStorage.setItem('playing', true);
-            }
-            */
+
             if (!this.playing) {
                 audio.play();
                 this.playing = true;
